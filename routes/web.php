@@ -23,9 +23,15 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// 3. Kelompok Rute Khusus Admin (Diproteksi Middleware Role)
+// Kelompok Rute Khusus Admin
 Route::middleware(['auth', 'checkrole:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::post('/admin/pendaftaran/{id}/update-status', [AdminDashboardController::class, 'updateStatus'])->name('admin.update_status');
+    
+    // Rute CRUD Master Kelas
+    Route::post('/admin/kelas', [AdminDashboardController::class, 'storeKelas'])->name('admin.store_kelas');
+    Route::put('/admin/kelas/{id}', [AdminDashboardController::class, 'updateKelas'])->name('admin.update_kelas');
+    Route::delete('/admin/kelas/{id}', [AdminDashboardController::class, 'destroyKelas'])->name('admin.destroy_kelas');
 });
 
 // 4. Pengaman Fitur Profil Bawaan Breeze (Mencegah Error Route NOT Defined)
