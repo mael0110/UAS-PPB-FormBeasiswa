@@ -34,6 +34,11 @@ Route::middleware(['auth', 'checkrole:admin'])->group(function () {
     Route::delete('/admin/kelas/{id}', [AdminDashboardController::class, 'destroyKelas'])->name('admin.destroy_kelas');
 });
 
+// 3.5 Kelompok Rute Khusus Pegawai (Diproteksi Middleware Role)
+Route::middleware(['auth', 'checkrole:pegawai'])->group(function () {
+    Route::get('/pegawai/dashboard', [\App\Http\Controllers\Pegawai\PegawaiDashboardController::class, 'index'])->name('pegawai.dashboard');
+});
+
 // 4. Pengaman Fitur Profil Bawaan Breeze (Mencegah Error Route NOT Defined)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
