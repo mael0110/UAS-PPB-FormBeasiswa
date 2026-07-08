@@ -15,7 +15,7 @@ class MahasiswaApiController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max|255',
+            'name' => 'required|string|max:255', // KOREKSI: Mengubah max|255 menjadi max:255
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
@@ -116,5 +116,17 @@ class MahasiswaApiController extends Controller
             'status' => 'success',
             'message' => 'Berkas pendaftaran beasiswa Anda berhasil dikirim ke Admin Poliban!'
         ], 201);
+    }
+
+    // 5. API LOGOUT MAHASISWA (TAMBAHAN)
+    public function logout(Request $request)
+    {
+        // Menghapus token yang sedang aktif digunakan oleh perangkat mobile
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil logout dari perangkat mobile.'
+        ], 200);
     }
 }

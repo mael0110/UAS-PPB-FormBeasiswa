@@ -27,3 +27,15 @@ Route::middleware('auth:sanctum')->group(function () {
         ]);
     });
 });
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/daftar-beasiswa', [MahasiswaApiController::class, 'daftarBeasiswa']);
+    Route::post('/logout', [MahasiswaApiController::class, 'logout']); // <-- Tambahkan ini
+    
+    Route::get('/user-profile', function (Request $request) {
+        return response()->json([
+            'status' => 'success',
+            'user' => $request->user()
+        ]);
+    });
+});
