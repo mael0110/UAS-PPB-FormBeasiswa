@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Models\Pendaftaran;
 
 // 1. Halaman Utama Beranda
 Route::get('/', function () {
@@ -39,6 +40,31 @@ Route::middleware(['auth', 'checkrole:admin'])->group(function () {
 // 3.5 Kelompok Rute Khusus Pegawai (Diproteksi Middleware Role)
 Route::middleware(['auth', 'checkrole:pegawai'])->group(function () {
     Route::get('/pegawai/dashboard', [\App\Http\Controllers\Pegawai\PegawaiDashboardController::class, 'index'])->name('pegawai.dashboard');
+
+    Route::patch('/pegawai/update-status/{id}', function (Request $request, $id) {
+        $request->validate([
+            'status_seleksi' => 'required|in:Pending,Lolos Berkas,Diterima,Ditolak,Revisi',
+        ]);
+
+        $pendaftaran = Pendaftaran::findOrFail($id);
+        $pendaftaran->update([
+            'status_seleksi' => $request->status_seleksi
+        ]);
+
+        return redirect()->back()->with('success', 'Status pendaftaran berhasil diperbarui!');
+    })->name('pegawai.update-status');
+
+    // Rute untuk menampilkan halaman data isian lengkap formulir mahasiswa
+    Route::get('/pegawai/detail-formulir/{id}', function ($id) {
+        // Diubah dari 'pendaftarans' menjadi 'pendaftaran' sesuai nama tabel databasemu
+        $pendaftaran = \DB::table('pendaftaran')->where('id', $id)->first();
+        
+        if (!$pendaftaran) {
+            abort(404, 'Data pendaftaran tidak ditemukan.');
+        }
+
+        return view('pegawai.detail-formulir', compact('pendaftaran'));
+    })->name('pegawai.detail-formulir');
 });
 
 Route::middleware(['auth', 'checkrole:mahasiswa'])->group(function () {
