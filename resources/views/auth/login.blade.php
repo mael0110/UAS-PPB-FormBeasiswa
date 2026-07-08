@@ -11,9 +11,9 @@
     <div class="w-full max-w-4xl bg-[#FAF3DD] rounded-2xl overflow-hidden p-4 md:p-8">
         
         <div class="flex flex-col items-center text-center mb-8">
-            <h1 class="text-2xl md:text-3xl font-bold text-[#C13E3E] tracking-wide">Poliban Scholarship</h1>
+            <h1 class="text-2xl md:text-3xl font-bold text-[#C13E3E] tracking-wide">Regal Academy Scholarship</h1>
             <p class="text-xs md:text-sm text-gray-600 mt-1 max-w-md">
-                Sistem Informasi Pendaftaran Beasiswa Politeknik Negeri Banjarmasin
+                Sistem Informasi Pendaftaran Beasiswa Regal Academy
             </p>
         </div>
 

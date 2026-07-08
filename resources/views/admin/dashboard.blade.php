@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard Manajemen - Poliban Scholarship') }}
+            {{ __('Dashboard Manajemen - Regal Academy Scholarship') }}
         </h2>
     </x-slot>
 
@@ -48,7 +48,7 @@
                     <div class="flex justify-between items-center mb-4">
                         <div>
                             <h3 class="text-base font-bold text-gray-800 uppercase tracking-wide">Data Pendaftaran Masuk</h3>
-                            <p class="text-xs text-gray-500 mt-0.5">Validasi berkas kelayakan beasiswa mahasiswa Poliban di sini.</p>
+                            <p class="text-xs text-gray-500 mt-0.5">Validasi berkas kelayakan beasiswa mahasiswa Regal Academy di sini.</p>
                         </div>
                         <button onclick="window.print()" class="data-no-print inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold py-2 px-4 rounded-lg shadow-sm transition">
                             🖨️ Cetak Laporan
