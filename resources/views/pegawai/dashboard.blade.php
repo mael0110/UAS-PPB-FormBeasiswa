@@ -116,7 +116,7 @@
                                             <option value="Ditolak" {{ $pendaftar->status_seleksi == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
                                         </select>
 
-                                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition duration-150">
+                                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition duration-150">
                                             Simpan
                                         </button>
                                     </form>
