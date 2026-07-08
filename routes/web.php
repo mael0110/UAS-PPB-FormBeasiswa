@@ -46,9 +46,12 @@ Route::middleware(['auth', 'checkrole:pegawai'])->group(function () {
             'status_seleksi' => 'required|in:Pending,Lolos Berkas,Diterima,Ditolak,Revisi',
         ]);
 
-        $pendaftaran = Pendaftaran::findOrFail($id);
-        $pendaftaran->update([
-            'status_seleksi' => $request->status_seleksi
+        // TAMBAHKAN BACKSLASH (\) SEBELUM KATA DB
+        \DB::table('pendaftaran')
+        ->where('id', $id)
+        ->update([
+            'status_seleksi' => $request->status_seleksi,
+            'updated_at' => now(),
         ]);
 
         return redirect()->back()->with('success', 'Status pendaftaran berhasil diperbarui!');

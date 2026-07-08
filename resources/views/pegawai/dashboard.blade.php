@@ -25,7 +25,7 @@
                         <h3 class="text-base font-bold text-gray-800 uppercase tracking-wide">Monitoring Status Beasiswa Mahasiswa</h3>
                     </div>
                     
-                    <button onclick="window.print()" class="data-no-print inline-flex items-center gap-2 bg-[#D34E4E] hover:bg-[#b83f3f] text-white text-xs font-semibold py-2.5 px-4 rounded-lg shadow-sm transition-all duration-200 ease-in-out transform hover:-translate-y-0.5">
+                    <button onclick="window.print()" class="data-no-print inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold py-2.5 px-4 rounded-lg shadow-sm transition-all duration-200 ease-in-out transform hover:-translate-y-0.5">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0a2.25 2.25 0 0 1-2.25 2.25H8.59A2.25 2.25 0 0 1 6.34 18m11.318-4.171A2.25 2.25 0 0 0 20.25 11.63V8.654c0-.206-.03-.41-.09-.607m-16.32 4.17A2.25 2.25 0 0 1 1.5 11.63V8.654c0-.206.03-.41.09-.607m18.57 0A2.25 2.25 0 0 0 18 5.869V4.5A2.25 2.25 0 0 0 15.75 2.25h-7.5A2.25 2.25 0 0 0 6 4.5v1.369a2.25 2.25 0 0 0-2.09 2.178m16.32 0A2.25 2.25 0 0 1 18 8.654v1.346m-14 0V8.654c0-.256.043-.51.127-.75m13.746 0a2.25 2.25 0 0 0-2.25-2.25h-7.5a2.25 2.25 0 0 0-2.25 2.25m13.496 0v.011m0-.011a2.247 2.247 0 0 0-.192-.75m0 0a2.25 2.25 0 0 0-2.058-1.5h-7.5a2.25 2.25 0 0 0-2.058 1.5m0 0c-.064.24-.096.491-.096.75v.016m12.3-.016a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25M6 10.125a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" />
                         </svg>
@@ -110,17 +110,13 @@
                                 <td class="px-6 py-4 text-right data-no-print">
                                     <form action="{{ route('pegawai.update-status', $pendaftar->id) }}" method="POST" class="inline-flex items-center gap-2">
                                         @csrf
-                                        @method('PATCH')
-                                        
-                                        <select name="status_seleksi" class="text-xs bg-gray-50 border border-gray-300 rounded-lg p-1.5 focus:outline-none focus:ring-1 focus:ring-[#D34E4E] text-gray-700 font-medium">
-                                            <option value="Pending" {{ $pendaftar->status_seleksi == 'Pending' ? 'selected' : '' }}>⏳ Pending</option>
-                                            <option value="Lolos Berkas" {{ $pendaftar->status_seleksi == 'Lolos Berkas' ? 'selected' : '' }}>📄 Lolos Berkas</option>
-                                            <option value="Revisi" {{ $pendaftar->status_seleksi == 'Revisi' ? 'selected' : '' }}>⚠️ Revisi</option>
-                                            <option value="Diterima" {{ $pendaftar->status_seleksi == 'Diterima' ? 'selected' : '' }}>🎉 Diterima</option>
-                                            <option value="Ditolak" {{ $pendaftar->status_seleksi == 'Ditolak' ? 'selected' : '' }}>❌ Ditolak</option>
+                                        @method('PATCH') <select name="status_seleksi" class="text-xs bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#D34E4E] text-gray-700 font-medium">
+                                            <option value="Pending" {{ $pendaftar->status_seleksi == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                            <option value="Diterima" {{ $pendaftar->status_seleksi == 'Diterima' ? 'selected' : '' }}>Diterima</option>
+                                            <option value="Ditolak" {{ $pendaftar->status_seleksi == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
                                         </select>
 
-                                        <button type="submit" class="bg-[#D34E4E] hover:bg-[#b83f3f] text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition duration-150">
+                                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition duration-150">
                                             Simpan
                                         </button>
                                     </form>
