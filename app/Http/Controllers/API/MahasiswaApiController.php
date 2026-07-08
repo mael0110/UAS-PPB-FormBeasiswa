@@ -50,12 +50,14 @@ class MahasiswaApiController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->where('role', 'mahasiswa')->first();
+        // Hapus filter where('role', 'mahasiswa') agar Admin/Pegawai bisa ditemukan
+        $user = User::where('email', $request->email)->first();
 
+        // Cek apakah user ada DAN password cocok
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Email atau password akun mahasiswa salah.'
+                'message' => 'Email atau password salah.' // Pesan lebih netral
             ], 401);
         }
 
@@ -66,7 +68,7 @@ class MahasiswaApiController extends Controller
             'message' => 'Login Berhasil!',
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'user' => $user
+            'user' => $user // User ini sekarang membawa info 'role': 'admin' dll
         ], 200);
     }
 

@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\MahasiswaApiController;
 
 /*
 |--------------------------------------------------------------------------
-| Jalur API - Poliban Scholarship
+| Jalur API - Regal Academy Scholarship
 |--------------------------------------------------------------------------
 */
 
@@ -18,20 +18,9 @@ Route::get('/kelas-beasiswa', [MahasiswaApiController::class, 'getKelas']);
 // Rute Terproteksi (Aplikasi Flutter wajib menyertakan Bearer Token hasil login)
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/daftar-beasiswa', [MahasiswaApiController::class, 'daftarBeasiswa']);
+    Route::post('/logout', [MahasiswaApiController::class, 'logout']);
     
     // Cek profil mahasiswa yang sedang login
-    Route::get('/user-profile', function (Request $request) {
-        return response()->json([
-            'status' => 'success',
-            'user' => $request->user()
-        ]);
-    });
-});
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/daftar-beasiswa', [MahasiswaApiController::class, 'daftarBeasiswa']);
-    Route::post('/logout', [MahasiswaApiController::class, 'logout']); // <-- Tambahkan ini
-    
     Route::get('/user-profile', function (Request $request) {
         return response()->json([
             'status' => 'success',
