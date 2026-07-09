@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\MahasiswaApiController;
 use App\Http\Controllers\Api\AdminApiController;
+use App\Http\Controllers\Api\PegawaiApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,4 +49,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // 3. CRUD Manajemen User
     Route::get('/admin/users', [AdminApiController::class, 'getAllUsers']);
     Route::delete('/admin/users/{id}', [AdminApiController::class, 'deleteUser']);
+
+    //pegawai
+    Route::get('/pegawai/dashboard', [PegawaiApiController::class, 'getDashboardData']);
+    Route::put('/pegawai/pendaftaran/{id}/status', [PegawaiApiController::class, 'updateStatus']);
 });
