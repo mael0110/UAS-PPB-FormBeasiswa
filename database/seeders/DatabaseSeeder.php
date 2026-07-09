@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
         // 1. Akun Admin
         User::create([
             'name' => 'Admin Utama',
-            'email' => 'super@admin.poliban.ac.id',
+            'email' => 'super@admin.com',
             'password' => Hash::make('password123'),
             'role' => 'admin', // Memastikan middleware 'checkrole:admin' mengizinkan masuk
         ]);
@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         // 2. Akun Pegawai
         User::create([
             'name' => 'Pegawai Akademik',
-            'email' => 'staf@pegawai.poliban.ac.id',
+            'email' => 'staf@pegawai.com',
             'password' => Hash::make('password123'),
             'role' => 'pegawai',
         ]);
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         // 3. Akun Mahasiswa
         User::create([
             'name' => 'Budi Mahasiswa',
-            'email' => 'budi@mahasiswa.poliban.ac.id',
+            'email' => 'budi@mahasiswa.com',
             'password' => Hash::make('password123'),
             'role' => 'mahasiswa',
         ]);
