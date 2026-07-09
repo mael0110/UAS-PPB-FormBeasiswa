@@ -84,41 +84,55 @@ class MahasiswaApiController extends Controller
     }
 
     // 4. API MAHASISWA MENGIRIM BERKAS PENDAFTARAN BEASISWA
-    public function daftarBeasiswa(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'kelas_coding_id' => 'required',
-        ]);
+   public function daftarBeasiswa(Request $request)
+{
+    // Validasi harus mencakup SEMUA kolom di tabel
+    $request->validate([
+        'kelas_coding_id' => 'required',
+        'nisn' => 'required',
+        'nama' => 'required',
+        'alamat' => 'required',
+        'tempat_lahir' => 'required',
+        'tanggal_lahir' => 'required',
+        'asal_sekolah' => 'required',
+        'jenis_kelamin' => 'required',
+        'jurusan' => 'required',
+        'nama_ayah' => 'required',
+        'pekerjaan_ayah' => 'required',
+        'nama_ibu' => 'required',
+        'pekerjaan_ibu' => 'required',
+        'penghasilan_orang_tua' => 'required',
+        'foto' => 'required|image',
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json(['status' => 'error', 'message' => 'Pilihan kelas coding wajib diisi.'], 422);
-        }
+    // Simpan foto ke folder storage/app/public/pendaftaran_berkas
+    $path = $request->file('foto')->store('pendaftaran_berkas', 'public');
 
-        $user = $request->user(); // Mendapatkan data mahasiswa yang sedang login lewat token
+    // Simpan ke database
+    DB::table('pendaftaran')->insert([
+        'user_id' => $request->user()->id,
+        'kelas_coding_id' => $request->kelas_coding_id,
+        'nisn' => $request->nisn,
+        'nama' => $request->nama,
+        'alamat' => $request->alamat,
+        'tempat_lahir' => $request->tempat_lahir,
+        'tanggal_lahir' => $request->tanggal_lahir,
+        'asal_sekolah' => $request->asal_sekolah,
+        'jenis_kelamin' => $request->jenis_kelamin,
+        'jurusan' => $request->jurusan,
+        'nama_ayah' => $request->nama_ayah,
+        'pekerjaan_ayah' => $request->pekerjaan_ayah,
+        'nama_ibu' => $request->nama_ibu,
+        'pekerjaan_ibu' => $request->pekerjaan_ibu,
+        'penghasilan_orang_tua' => $request->penghasilan_orang_tua,
+        'foto' => $path,
+        'status_seleksi' => 'Pending',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
 
-        // Cek apakah mahasiswa ini sudah pernah mendaftar sebelumnya
-        $sudahDaftar = DB::table('pendaftaran')->where('user_id', $user->id)->exists();
-        if ($sudahDaftar) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Anda sudah pernah mengirimkan berkas pendaftaran sebelumnya.'
-            ], 400);
-        }
-
-        // Simpan data pendaftaran masuk ke database
-        DB::table('pendaftaran')->insert([
-            'user_id' => $user->id,
-            'kelas_coding_id' => $request->kelas_coding_id,
-            'status_seleksi' => 'Pending', // Default awal perlu di-review admin
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Berkas pendaftaran beasiswa Anda berhasil dikirim ke Admin Poliban!'
-        ], 201);
-    }
+    return response()->json(['status' => 'success', 'message' => 'Pendaftaran berhasil!'], 201);
+}
 
     // 5. API LOGOUT MAHASISWA (TAMBAHAN)
     public function logout(Request $request)
@@ -130,5 +144,19 @@ class MahasiswaApiController extends Controller
             'status' => 'success',
             'message' => 'Berhasil logout dari perangkat mobile.'
         ], 200);
+    }
+
+    public function getStatusPendaftaran(Request $request)
+    {
+        $pendaftaran = DB::table('pendaftaran')
+            ->join('kelas_coding', 'pendaftaran.kelas_coding_id', '=', 'kelas_coding.id')
+            ->where('pendaftaran.user_id', $request->user()->id)
+            ->select('pendaftaran.status_seleksi', 'kelas_coding.nama_kelas')
+            ->first();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $pendaftaran
+        ]);
     }
 }
