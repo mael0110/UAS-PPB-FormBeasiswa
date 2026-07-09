@@ -159,4 +159,19 @@ class MahasiswaApiController extends Controller
             'data' => $pendaftaran
         ]);
     }
+
+    public function getProfil(Request $request)
+    {
+        // Mengambil data dengan menggabungkan tabel users dan pendaftaran
+        $data = DB::table('users')
+                ->leftJoin('pendaftaran', 'users.id', '=', 'pendaftaran.user_id')
+                ->select('users.name', 'pendaftaran.*') // Mengambil nama dari users dan semua field pendaftaran
+                ->where('users.id', $request->user()->id)
+                ->first();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data // Sekarang data ini akan berisi nama user dan data pendaftarannya
+        ], 200);
+    }
 }

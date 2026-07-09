@@ -22,6 +22,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/status-pendaftaran', [MahasiswaApiController::class, 'getStatusPendaftaran']);
     Route::post('/logout', [MahasiswaApiController::class, 'logout']);
     Route::get('/kelas', [MahasiswaApiController::class, 'getKelas']);
+    Route::get('/profil-mahasiswa', [MahasiswaApiController::class, 'getProfil']);
+    Route::get('/tes-koneksi', function() {
+    return response()->json(['message' => 'Koneksi Berhasil']);
+});
     
     // Cek profil mahasiswa yang sedang login
     Route::get('/user-profile', function (Request $request) {
